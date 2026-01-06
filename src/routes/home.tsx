@@ -15,6 +15,7 @@ import { useDragDrop } from '@/hooks/use-drag-drop';
 import { ImageUploadButton } from '@/components/image-upload-button';
 import { ImageAttachmentPreview } from '@/components/image-attachment-preview';
 import { toast } from 'sonner';
+import { FileQuestion, BookOpen, TrendingUp } from 'lucide-react';
 
 export default function Home() {
 	const navigate = useNavigate();
@@ -309,6 +310,91 @@ export default function Home() {
 					)}
 				</AnimatePresence>
 
+				<motion.section
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+					className={clsx('max-w-6xl mx-auto px-4 z-10', images.length > 0 ? 'mt-12' : 'mt-16')}
+				>
+					<div className="flex flex-col items-start mb-6">
+						<h2 className="text-2xl font-medium text-text-secondary/80 mb-2">Quick Start for Educators</h2>
+						<p className="text-sm text-text-tertiary">Get started with our most popular tools</p>
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+						<motion.div
+							whileHover={{ y: -4 }}
+							transition={{ duration: 0.2 }}
+							className="group relative bg-bg-4 dark:bg-bg-2 border border-border-primary rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+							onClick={() => {
+								const query = "Create a quiz builder app for educators";
+								handleCreateApp(query, 'app');
+							}}
+						>
+							<div className="flex items-center gap-4 mb-4">
+								<div className="p-3 rounded-lg bg-[#2D87F0]/10 dark:bg-[#2D87F0]/20">
+									<FileQuestion className="size-6 text-[#2D87F0]" />
+								</div>
+								<h3 className="text-lg font-semibold text-text-primary">Quiz Builder</h3>
+							</div>
+							<p className="text-sm text-text-tertiary mb-4 leading-relaxed">
+								Create engaging quizzes to assess student understanding with customizable questions and instant feedback.
+							</p>
+							<div className="flex items-center text-[#2D87F0] text-sm font-medium group-hover:gap-2 gap-1 transition-all">
+								<span>Get Started</span>
+								<ArrowRight className="size-4" />
+							</div>
+						</motion.div>
+
+						<motion.div
+							whileHover={{ y: -4 }}
+							transition={{ duration: 0.2 }}
+							className="group relative bg-bg-4 dark:bg-bg-2 border border-border-primary rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+							onClick={() => {
+								const query = "Create a lesson plan generator for teachers";
+								handleCreateApp(query, 'app');
+							}}
+						>
+							<div className="flex items-center gap-4 mb-4">
+								<div className="p-3 rounded-lg bg-[#FFD447]/15 dark:bg-[#FFD447]/25">
+									<BookOpen className="size-6 text-[#D4A017] dark:text-[#FFD447]" />
+								</div>
+								<h3 className="text-lg font-semibold text-text-primary">Lesson Plan Generator</h3>
+							</div>
+							<p className="text-sm text-text-tertiary mb-4 leading-relaxed">
+								Design comprehensive lesson plans with ease. Generate structured, engaging content tailored to your curriculum.
+							</p>
+							<div className="flex items-center text-[#D4A017] dark:text-[#FFD447] text-sm font-medium group-hover:gap-2 gap-1 transition-all">
+								<span>Get Started</span>
+								<ArrowRight className="size-4" />
+							</div>
+						</motion.div>
+
+						<motion.div
+							whileHover={{ y: -4 }}
+							transition={{ duration: 0.2 }}
+							className="group relative bg-bg-4 dark:bg-bg-2 border border-border-primary rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+							onClick={() => {
+								const query = "Create a student progress tracking app";
+								handleCreateApp(query, 'app');
+							}}
+						>
+							<div className="flex items-center gap-4 mb-4">
+								<div className="p-3 rounded-lg bg-[#6CC551]/10 dark:bg-[#6CC551]/20">
+									<TrendingUp className="size-6 text-[#6CC551]" />
+								</div>
+								<h3 className="text-lg font-semibold text-text-primary">Student Progress App</h3>
+							</div>
+							<p className="text-sm text-text-tertiary mb-4 leading-relaxed">
+								Monitor and analyze student progress effectively with visual dashboards and detailed performance insights.
+							</p>
+							<div className="flex items-center text-[#6CC551] text-sm font-medium group-hover:gap-2 gap-1 transition-all">
+								<span>Get Started</span>
+								<ArrowRight className="size-4" />
+							</div>
+						</motion.div>
+					</div>
+				</motion.section>
+
 				<AnimatePresence>
 					{discoverReady && (
 						<motion.section
@@ -318,7 +404,7 @@ export default function Home() {
 							animate={{ opacity: 1, height: "auto" }}
 							exit={{ opacity: 0, height: 0 }}
 							transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-							className={clsx('max-w-6xl mx-auto px-4 z-10', images.length > 0 ? 'mt-10' : 'mt-16 mb-8')}
+							className={clsx('max-w-6xl mx-auto px-4 z-10 mt-16 mb-8')}
 						>
 							<div className='flex flex-col items-start'>
 								<h2 className="text-2xl font-medium text-text-secondary/80">Discover Apps built by the community</h2>
