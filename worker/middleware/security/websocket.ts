@@ -5,7 +5,6 @@ const logger = createLogger('WebSocketSecurity');
 
 export function validateWebSocketOrigin(request: Request, env: Env): boolean {
     const origin = request.headers.get('Origin');
-    
     if (!origin) {
         // Server-side SDK clients do not send `Origin`.
         // ownership and authorization is anyways checked in the middlewares already

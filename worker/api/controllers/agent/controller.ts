@@ -151,18 +151,6 @@ export class CodingAgentController extends BaseController {
                 }));
             }
 
-            writer.write({
-                message: 'Code generation started',
-                agentId: agentId,
-                websocketUrl,
-                httpStatusUrl,
-                behaviorType,
-                projectType: finalProjectType,
-                template: {
-                    name: templateDetails.name,
-                    files: getTemplateImportantFiles(templateDetails),
-                }
-            });
             const agentInstance = await getAgentStub(env, agentId, { behaviorType, projectType: finalProjectType });
 
             const baseInitArgs = {
@@ -179,11 +167,31 @@ export class CodingAgentController extends BaseController {
 
             const initArgs = { ...baseInitArgs, templateInfo: { templateDetails, selection } }
 
+            // Start agent initialization BEFORE sending websocketUrl to client
+            // This ensures the agent stub exists and can handle WebSocket connections
+            // The agent's fetch() method should handle connections even during initialization
             const agentPromise = agentInstance.initialize(initArgs) as Promise<AgentState>;
             agentPromise.then(async (_state: AgentState) => {
                 writer.write("terminate");
                 writer.close();
                 this.logger.info(`Agent ${agentId} terminated successfully`);
+            }).catch((error) => {
+                this.logger.error(`Agent ${agentId} initialization failed:`, error);
+            });
+
+            // Send websocketUrl after agent stub is created and initialization started
+            // The agent should be able to handle WebSocket connections even during init
+            writer.write({
+                message: 'Code generation started',
+                agentId: agentId,
+                websocketUrl,
+                httpStatusUrl,
+                behaviorType,
+                projectType: finalProjectType,
+                template: {
+                    name: templateDetails.name,
+                    files: getTemplateImportantFiles(templateDetails),
+                }
             });
 
             this.logger.info(`Agent ${agentId} init launched successfully`);
@@ -254,7 +262,6 @@ export class CodingAgentController extends BaseController {
             try {
                 // Get the agent instance to handle the WebSocket connection
                 const agentInstance = await getAgentStub(env, chatId);
-                
                 this.logger.info(`Successfully got agent instance for chat: ${chatId}`);
 
                 // Let the agent handle the WebSocket connection directly
