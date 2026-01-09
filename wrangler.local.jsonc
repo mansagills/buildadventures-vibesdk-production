@@ -1,0 +1,68 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "buildadventures-vibesdk-local",
+	"main": "worker/index.ts",
+	"compatibility_date": "2025-08-10",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "dist",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": true,
+		"binding": "ASSETS"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "vibesdk-db-local",
+			"database_id": "local-dev-db"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "CodeGeneratorAgent",
+				"name": "CodeGenObject"
+			},
+			{
+				"class_name": "DORateLimitStore",
+				"name": "DORateLimitStore"
+			},
+			{
+				"class_name": "UserSecretsStore",
+				"name": "UserSecretsStore"
+			}
+		]
+	},
+	"kv_namespaces": [
+		{
+			"binding": "VibecoderStore",
+			"id": "local-kv"
+		}
+	],
+	"migrations": [
+		{
+			"new_sqlite_classes": [
+				"CodeGeneratorAgent"
+			],
+			"tag": "v1"
+		},
+		{
+			"new_sqlite_classes": [
+				"DORateLimitStore"
+			],
+			"tag": "v2"
+		},
+		{
+			"new_sqlite_classes": [
+				"UserSecretsStore"
+			],
+			"tag": "v3"
+		}
+	],
+	"vars": {
+		"TEMPLATES_REPOSITORY": "https://github.com/cloudflare/vibesdk-templates",
+		"DISPATCH_NAMESPACE": "vibesdk-default-namespace",
+		"ENABLE_READ_REPLICAS": "false",
+		"MAX_SANDBOX_INSTANCES": "10"
+	}
+}

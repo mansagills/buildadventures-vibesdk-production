@@ -7,6 +7,7 @@
 		"setup": "tsx scripts/setup.ts",
 		"prepare": "husky",
 		"dev": "DEV_MODE=true bunx --bun vite",
+		"dev:local": "DEV_MODE=true WRANGLER_CONFIG=wrangler.local.jsonc bunx --bun vite",
 		"build": "tsc -b --incremental && vite build",
 		"typecheck": "tsc -b --incremental --noEmit",
 		"lint": "eslint .",
